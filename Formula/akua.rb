@@ -1,32 +1,32 @@
 # frozen_string_literal: true
 
-# Auto-bumped by cli-release.yml in cnap-tech/akua on every
+# Auto-bumped by release.yml in cnap-tech/akua on every stable
 # tag push. Manual edits get overwritten.
 class Akua < Formula
   desc "Cloud-native package build, transform, and preview toolkit"
   homepage "https://github.com/cnap-tech/akua"
-  version "0.8.6"
+  version "0.8.7"
   license "Apache-2.0"
 
   on_macos do
     on_arm do
-      url "https://github.com/cnap-tech/akua/releases/download/akua-v#{version}/akua-v#{version}-aarch64-apple-darwin.tar.gz"
-      sha256 "c457194cfd51c4e8400dd09b156932f9d33488cee51f96ee8520ba981ab8ea85"
+      url "https://github.com/cnap-tech/akua/releases/download/v#{version}/akua-v#{version}-aarch64-apple-darwin.tar.gz"
+      sha256 "61c5f8275e4c66049bcbf674ff41ed942e4dd2be4154f58b7affae6ad62c234a"
     end
     on_intel do
-      url "https://github.com/cnap-tech/akua/releases/download/akua-v#{version}/akua-v#{version}-x86_64-apple-darwin.tar.gz"
-      sha256 "8651822f47c1b7432cbb7f8d38ddcba88346e1caf27a1d16b1090091e29edc41"
+      url "https://github.com/cnap-tech/akua/releases/download/v#{version}/akua-v#{version}-x86_64-apple-darwin.tar.gz"
+      sha256 "ac8ff7e2401762fa0ca6252d6b164a82c521f34eb5bd3aab447a2c73165da91c"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/cnap-tech/akua/releases/download/akua-v#{version}/akua-v#{version}-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "b543edf2a69b06faf7bb3e803e96d08addc33a7e6e6871b966d875b98e6a8a9a"
+      url "https://github.com/cnap-tech/akua/releases/download/v#{version}/akua-v#{version}-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "f0cc0c94554520ebf4cb5bd576a8425a07f3f7068e3ea6a57170306952ff999a"
     end
     on_intel do
-      url "https://github.com/cnap-tech/akua/releases/download/akua-v#{version}/akua-v#{version}-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "7564a6643df33d61b6b54cad8446c89dfc96f01bdcced4ae1f5bc9a001556761"
+      url "https://github.com/cnap-tech/akua/releases/download/v#{version}/akua-v#{version}-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "b246e0bb9b4a5265ee56a15f3dac2d85d45b964fd43010acc6febff214b15730"
     end
   end
 
