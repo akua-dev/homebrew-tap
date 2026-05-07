@@ -11,22 +11,22 @@ class Akua < Formula
   on_macos do
     on_arm do
       url "https://github.com/cnap-tech/akua/releases/download/v#{version}/akua-v#{version}-aarch64-apple-darwin.tar.gz"
-      sha256 "61c5f8275e4c66049bcbf674ff41ed942e4dd2be4154f58b7affae6ad62c234a"
+      sha256 "e834c08869d6189e310c1f4ab0bdd878f74b2b9c72397dac2f32da6b190e979b"
     end
     on_intel do
       url "https://github.com/cnap-tech/akua/releases/download/v#{version}/akua-v#{version}-x86_64-apple-darwin.tar.gz"
-      sha256 "ac8ff7e2401762fa0ca6252d6b164a82c521f34eb5bd3aab447a2c73165da91c"
+      sha256 "fc4399c559fab4e3657882802baf6da46ede185e0ae2433f1c139096c585a7f0"
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/cnap-tech/akua/releases/download/v#{version}/akua-v#{version}-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "f0cc0c94554520ebf4cb5bd576a8425a07f3f7068e3ea6a57170306952ff999a"
+      sha256 "9545b48809fe1ac2035864419dd7527c43d8753e415fedd04b7c2f3eb73d4d21"
     end
     on_intel do
       url "https://github.com/cnap-tech/akua/releases/download/v#{version}/akua-v#{version}-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "b246e0bb9b4a5265ee56a15f3dac2d85d45b964fd43010acc6febff214b15730"
+      sha256 "8b9ec364ebaf247b6c3813a41ac4db0763aec29313b7c7b8071c4d4651d1e878"
     end
   end
 
