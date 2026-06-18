@@ -5,28 +5,28 @@
 class Akua < Formula
   desc "Cloud-native package build, transform, and preview toolkit"
   homepage "https://github.com/cnap-tech/akua"
-  version "0.8.21"
+  version "0.8.22"
   license "Apache-2.0"
 
   on_macos do
     on_arm do
       url "https://github.com/cnap-tech/akua/releases/download/v#{version}/akua-v#{version}-aarch64-apple-darwin.tar.gz"
-      sha256 "65796b9f45244cfd33cc342b08d35e0db071ca337eb09e8414b3438bb0a74f3b"
+      sha256 "534594b75adbe1a0808bbb3b5d4bdc1f17ece9e06560a77fa9566f6fa7e28376"
     end
     on_intel do
       url "https://github.com/cnap-tech/akua/releases/download/v#{version}/akua-v#{version}-x86_64-apple-darwin.tar.gz"
-      sha256 "8b43912af9bb5f287f2ec48d9a5ace71749cb458fed47c6a4b534520200e1983"
+      sha256 "f9eb7bd8f2e62515f185456cc9948b54374a9e531f97a0c60e30d508f9c28509"
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/cnap-tech/akua/releases/download/v#{version}/akua-v#{version}-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "92829e5824f225bcca1a2147f6e0d06c11d074ee395c07afb99323334fe5550c"
+      sha256 "9346510e012c9258dad03b2ec8afc04689cd5304ed4376fb5f857b4f657d47bb"
     end
     on_intel do
       url "https://github.com/cnap-tech/akua/releases/download/v#{version}/akua-v#{version}-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "97cfad7d541501acb17738a398b3bb476c5be8679632e95a7c32eaa6de1fa063"
+      sha256 "8382db010f1449a563c0ac718d16046886aa173398be89f6d5de4da873fd3f03"
     end
   end
 
