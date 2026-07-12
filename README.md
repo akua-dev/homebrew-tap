@@ -1,15 +1,15 @@
-# Homebrew Tap for CNAP
+# Homebrew Tap for Akua
 
-Official Homebrew tap for [CNAP](https://cnap.tech) tools.
+Official Homebrew tap for [Akua](https://github.com/akua-dev/akua).
 
 ## Install
 
 ```bash
-brew install cnap-tech/tap/cnap
+brew install akua-dev/tap/akua
 ```
 
 After installing, upgrades work with just:
 
 ```bash
-brew upgrade cnap
+brew upgrade akua
 ```
