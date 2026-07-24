@@ -9,8 +9,8 @@ class Cnap < Formula
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/cnap-tech/cli/releases/download/v0.6.1/cnap_0.6.1_darwin_amd64.tar.gz"
-      sha256 "3724b0b22fa9f2b88431ae34c5515fce5590b1b0950c8a4389dd03d3114dd463"
+      url "https://github.com/cnap-tech/cli/archive/refs/tags/v0.9.0.tar.gz"
+      sha256 "638cec6053219d9b9f58108c98d51d0dd6c0e1623d16a889e130fd82ddef5d4c"
 
       def install
         bin.install "cnap"
