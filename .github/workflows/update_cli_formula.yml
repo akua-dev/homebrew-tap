@@ -1,21 +1,22 @@
-name: Update platform CLI formula
+name: Update verified public release formula
 
 on:
   repository_dispatch:
-    types: [akua-cli-release-published]
+    types: [akua-cli-release-published, akuapkg-release-published]
 
 permissions:
   contents: write
   pull-requests: write
 
 concurrency:
-  group: update-cli-formula-${{ github.event.client_payload.version }}
+  group: update-formula-${{ github.event.action }}-${{ github.event.client_payload.version }}
   cancel-in-progress: false
 
 jobs:
   update:
     runs-on: ubuntu-latest
     env:
+      FORMULA: ${{ github.event.action == 'akua-cli-release-published' && 'akua' || 'akuapkg' }}
       VERSION: ${{ github.event.client_payload.version }}
       TAG: ${{ github.event.client_payload.tag }}
       RELEASE_URL: ${{ github.event.client_payload.release_url }}
@@ -23,26 +24,27 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Download the published formula manifest
-        run: curl --fail --location --proto '=https' --tlsv1.2 "$MANIFEST_URL" --output "$RUNNER_TEMP/cli-homebrew.json"
+        run: curl --fail --location --proto '=https' --tlsv1.2 "$MANIFEST_URL" --output "$RUNNER_TEMP/release-homebrew.json"
       - name: Validate the release and render the formula
         run: |
           ruby scripts/update_formula.rb \
+            --formula "$FORMULA" \
             --version "$VERSION" \
             --tag "$TAG" \
             --release-url "$RELEASE_URL" \
             --manifest-url "$MANIFEST_URL" \
-            --manifest "$RUNNER_TEMP/cli-homebrew.json" \
-            --output Formula/akua.rb
+            --manifest "$RUNNER_TEMP/release-homebrew.json" \
+            --output "Formula/$FORMULA.rb"
       - name: Test the tap contracts
         run: ruby -Itest -e 'Dir["test/*_test.rb"].sort.each { |file| require File.expand_path(file) }'
       - name: Open the formula update for review
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
-          branch: automation/cli-${{ github.event.client_payload.version }}
+          branch: automation/${{ env.FORMULA }}-${{ github.event.client_payload.version }}
           delete-branch: true
-          add-paths: Formula/akua.rb
-          commit-message: "chore: update platform CLI to v${{ github.event.client_payload.version }}"
-          title: "chore: update platform CLI to v${{ github.event.client_payload.version }}"
+          add-paths: Formula/${{ env.FORMULA }}.rb
+          commit-message: "chore: update ${{ env.FORMULA }} to v${{ github.event.client_payload.version }}"
+          title: "chore: update ${{ env.FORMULA }} to v${{ github.event.client_payload.version }}"
           body: |
             Generated from the verified release manifest for ${{ github.event.client_payload.release_url }}.
 

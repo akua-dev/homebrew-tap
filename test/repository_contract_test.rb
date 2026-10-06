@@ -24,7 +24,7 @@ class RepositoryContractTest < Minitest::Test
 
     assert_includes formula, "class Akuapkg < Formula"
     assert_includes formula, 'homepage "https://github.com/akua-dev/akuapkg"'
-    assert_includes formula, 'bin.install "akua" => "akuapkg"'
+    assert_match(/bin\.install .*\bakuapkg\b/, formula)
     assert_includes formula, %Q(shell_output("\#{bin}/akuapkg --version"))
   end
 
@@ -38,7 +38,7 @@ class RepositoryContractTest < Minitest::Test
       aliases: true,
     )
     triggers = workflow.fetch(true)
-    assert_equal({ "types" => ["akua-cli-release-published"] }, triggers.fetch("repository_dispatch"))
+    assert_equal({ "types" => ["akua-cli-release-published", "akuapkg-release-published"] }, triggers.fetch("repository_dispatch"))
     refute triggers.key?("push")
     assert_equal "write", workflow.fetch("permissions").fetch("pull-requests")
 
