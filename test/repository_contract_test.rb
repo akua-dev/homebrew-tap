@@ -3,6 +3,7 @@
 
 require "minitest/autorun"
 require "yaml"
+require "shellwords"
 
 class RepositoryContractTest < Minitest::Test
   ROOT = File.expand_path("..", __dir__).freeze
@@ -32,7 +33,7 @@ class RepositoryContractTest < Minitest::Test
     refute File.exist?(File.join(ROOT, "Formula", "cnap.rb"))
   end
 
-  def test_dispatch_workflow_validates_and_opens_a_reviewed_pr
+  def test_dispatch_workflow_tests_and_merges_its_exact_formula_pr
     workflow = YAML.safe_load(
       File.binread(File.join(ROOT, ".github", "workflows", "update_cli_formula.yml")),
       aliases: true,
@@ -45,7 +46,26 @@ class RepositoryContractTest < Minitest::Test
     steps = workflow.fetch("jobs").fetch("update").fetch("steps")
     render_step = steps.find { |step| step["name"] == "Validate the release and render the formula" }
     assert_includes render_step.fetch("run"), "ruby scripts/update_formula.rb"
-    pr_step = steps.find { |step| step["name"] == "Open the formula update for review" }
+    pr_step = steps.find { |step| step["name"] == "Open the tested formula update" }
     assert_match(%r{\Apeter-evans/create-pull-request@[0-9a-f]{40}\z}, pr_step.fetch("uses"))
+    assert_equal "formula_pr", pr_step["id"]
+    assert_equal "main", pr_step.fetch("with")["base"]
+    assert_equal "Formula/${{ env.FORMULA }}.rb", pr_step.fetch("with").fetch("add-paths")
+    assert_equal "automation/${{ env.FORMULA }}-${{ github.event.client_payload.version }}", pr_step.fetch("with").fetch("branch")
+
+    merge_step = steps.find { |step| step["name"] == "Merge the tested formula update" }
+    refute_nil merge_step
+    assert_operator steps.index(steps.find { |step| step["name"] == "Test the tap contracts" }), :<, steps.index(pr_step)
+    assert_operator steps.index(pr_step), :<, steps.index(merge_step)
+    assert_equal "${{ success() && steps.formula_pr.outputs.pull-request-number != '' }}", merge_step.fetch("if")
+    assert_equal({
+      "GH_TOKEN" => "${{ github.token }}",
+      "PR_NUMBER" => "${{ steps.formula_pr.outputs.pull-request-number }}",
+      "PR_HEAD_SHA" => "${{ steps.formula_pr.outputs.pull-request-head-sha }}",
+    }, merge_step.fetch("env"))
+    merge_commands = merge_step.fetch("run").lines.map(&:strip)
+    assert_equal 2, merge_commands.length
+    assert_equal '[[ "$PR_HEAD_SHA" =~ ^[0-9a-f]{40}$ ]] || exit 1', merge_commands.first
+    assert_equal ["gh", "pr", "merge", "$PR_NUMBER", "--repo", "akua-dev/homebrew-tap", "--squash", "--match-head-commit", "$PR_HEAD_SHA"], Shellwords.split(merge_commands.last)
   end
 end
