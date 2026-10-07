@@ -1,30 +1,30 @@
 # frozen_string_literal: true
 
-# Generated from the verified akua-dev/cli v0.11.0 release manifest.
+# Generated from the verified akua-dev/cli v0.11.2 release manifest.
 class Akua < Formula
   desc "CLI for building, deploying, and operating applications with Akua"
   homepage "https://docs.akua.dev"
-  version "0.11.0"
+  version "0.11.2"
 
   on_macos do
     on_arm do
-      url "https://github.com/akua-dev/cli/releases/download/v0.11.0/akua-v0.11.0-darwin-arm64.tar.gz"
-      sha256 "399148be54a4a51e5ce75725fe5068967af16169d38716e0c65f6483bce891e8"
+      url "https://github.com/akua-dev/cli/releases/download/v0.11.2/akua-v0.11.2-darwin-arm64.tar.gz"
+      sha256 "232c1dab73182b88c8c7711cfadd79a66597daf18f4a284b693bc0fd0f70658f"
     end
     on_intel do
-      url "https://github.com/akua-dev/cli/releases/download/v0.11.0/akua-v0.11.0-darwin-x64.tar.gz"
-      sha256 "b3e1b698f3d948ae86b34d6c7bef5b679e4160af72da25db39f827e43b89c072"
+      url "https://github.com/akua-dev/cli/releases/download/v0.11.2/akua-v0.11.2-darwin-x64.tar.gz"
+      sha256 "971abd582a710db8a3603a8ef05bd0a0605cce0599b5957eefb58a6f2fc4b718"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/akua-dev/cli/releases/download/v0.11.0/akua-v0.11.0-linux-arm64.tar.gz"
-      sha256 "a944a47ece791f6a6b80503c084ab06fea26fe5cbae1e1cfe798a9a649071209"
+      url "https://github.com/akua-dev/cli/releases/download/v0.11.2/akua-v0.11.2-linux-arm64.tar.gz"
+      sha256 "b684304a043d5227114273fdd87d77450149426fbab68b336b3633f3b1055247"
     end
     on_intel do
-      url "https://github.com/akua-dev/cli/releases/download/v0.11.0/akua-v0.11.0-linux-x64.tar.gz"
-      sha256 "0df0fde3e6df541a1a261419556a376d85e823bb9aa15a93a4ee586dd86758a4"
+      url "https://github.com/akua-dev/cli/releases/download/v0.11.2/akua-v0.11.2-linux-x64.tar.gz"
+      sha256 "7b474e70b74dfdcee85d19c369b2b0133c1a4aa0c23c1a15383194e301bcd61e"
     end
   end
 
@@ -32,7 +32,7 @@ class Akua < Formula
     libexec.install Dir["*"]
     bin.install_symlink libexec/"akua"
   end
-
+  
   test do
     assert_match version.to_s, shell_output("#{bin}/akua --version")
     if (libexec/"node_modules/@akua-dev/native").exist?
