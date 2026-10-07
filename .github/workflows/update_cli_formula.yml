@@ -37,9 +37,11 @@ jobs:
             --output "Formula/$FORMULA.rb"
       - name: Test the tap contracts
         run: ruby -Itest -e 'Dir["test/*_test.rb"].sort.each { |file| require File.expand_path(file) }'
-      - name: Open the formula update for review
+      - name: Open the tested formula update
+        id: formula_pr
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
+          base: main
           branch: automation/${{ env.FORMULA }}-${{ github.event.client_payload.version }}
           delete-branch: true
           add-paths: Formula/${{ env.FORMULA }}.rb
@@ -48,4 +50,13 @@ jobs:
           body: |
             Generated from the verified release manifest for ${{ github.event.client_payload.release_url }}.
 
-            This pull request intentionally requires review before merge.
+            The formula is merged automatically after the tap contracts pass, with the tested pull request head fixed by SHA.
+      - name: Merge the tested formula update
+        if: ${{ success() && steps.formula_pr.outputs.pull-request-number != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ steps.formula_pr.outputs.pull-request-number }}
+          PR_HEAD_SHA: ${{ steps.formula_pr.outputs.pull-request-head-sha }}
+        run: |
+          [[ "$PR_HEAD_SHA" =~ ^[0-9a-f]{40}$ ]] || exit 1
+          gh pr merge "$PR_NUMBER" --repo akua-dev/homebrew-tap --squash --match-head-commit "$PR_HEAD_SHA"
