@@ -1,30 +1,30 @@
 # frozen_string_literal: true
 
-# Generated from the verified akua-dev/akuapkg v0.9.6 release manifest.
+# Generated from the verified akua-dev/akuapkg v0.10.0 release manifest.
 class Akuapkg < Formula
   desc "Cloud-native package build, transform, and preview toolkit"
   homepage "https://github.com/akua-dev/akuapkg"
-  version "0.9.6"
+  version "0.10.0"
 
   on_macos do
     on_arm do
-      url "https://github.com/akua-dev/akuapkg/releases/download/v0.9.6/akuapkg-v0.9.6-aarch64-apple-darwin.tar.gz"
-      sha256 "32d37fe1c7ac0a2c65bfa8d5c1b8e8c08a6d7c332e59ec166a79f5c037bbd110"
+      url "https://github.com/akua-dev/akuapkg/releases/download/v0.10.0/akuapkg-v0.10.0-aarch64-apple-darwin.tar.gz"
+      sha256 "b93bd7cfc94db0db48d5c64317e343d14afbdeaa214481427277c919ce3754d7"
     end
     on_intel do
-      url "https://github.com/akua-dev/akuapkg/releases/download/v0.9.6/akuapkg-v0.9.6-x86_64-apple-darwin.tar.gz"
-      sha256 "5ad76b7ba1d684f78f12035bbc2e2829399fd1cffa89f5dc35ae0955c024cb8d"
+      url "https://github.com/akua-dev/akuapkg/releases/download/v0.10.0/akuapkg-v0.10.0-x86_64-apple-darwin.tar.gz"
+      sha256 "beb12c8058857de7942af8a670ea25bec52b56120005b9ac905405998e14ff25"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/akua-dev/akuapkg/releases/download/v0.9.6/akuapkg-v0.9.6-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "e0660956a20f64b4c305c59932475914728e0b7ca4ea6070a66defb39c6fe142"
+      url "https://github.com/akua-dev/akuapkg/releases/download/v0.10.0/akuapkg-v0.10.0-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "123b173525218abfbd29da16f92aca7d0df3ee5220d81acd9a064acba76d0922"
     end
     on_intel do
-      url "https://github.com/akua-dev/akuapkg/releases/download/v0.9.6/akuapkg-v0.9.6-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "1ec198953af885058a0c90426de9b32d6d8c68379b29ddc7afc3b454b7ef0517"
+      url "https://github.com/akua-dev/akuapkg/releases/download/v0.10.0/akuapkg-v0.10.0-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "a1929cd6f1579324f2633a8f342b6ef939d0c5fdb9d524840d3a4c0243010a16"
     end
   end
 
