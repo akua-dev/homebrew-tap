@@ -1,30 +1,30 @@
 # frozen_string_literal: true
 
-# Generated from the verified akua-dev/akuapkg v0.10.0 release manifest.
+# Generated from the verified akua-dev/akuapkg v0.10.1 release manifest.
 class Akuapkg < Formula
   desc "Cloud-native package build, transform, and preview toolkit"
   homepage "https://github.com/akua-dev/akuapkg"
-  version "0.10.0"
+  version "0.10.1"
 
   on_macos do
     on_arm do
-      url "https://github.com/akua-dev/akuapkg/releases/download/v0.10.0/akuapkg-v0.10.0-aarch64-apple-darwin.tar.gz"
-      sha256 "b93bd7cfc94db0db48d5c64317e343d14afbdeaa214481427277c919ce3754d7"
+      url "https://github.com/akua-dev/akuapkg/releases/download/v0.10.1/akuapkg-v0.10.1-aarch64-apple-darwin.tar.gz"
+      sha256 "351eb9638fa0dacc14375a89a4831fa20f78c8f1b1994f5bd11c3d08f487d567"
     end
     on_intel do
-      url "https://github.com/akua-dev/akuapkg/releases/download/v0.10.0/akuapkg-v0.10.0-x86_64-apple-darwin.tar.gz"
-      sha256 "beb12c8058857de7942af8a670ea25bec52b56120005b9ac905405998e14ff25"
+      url "https://github.com/akua-dev/akuapkg/releases/download/v0.10.1/akuapkg-v0.10.1-x86_64-apple-darwin.tar.gz"
+      sha256 "b8f61ab15e14e9a6446254c0dc9fed144e0ea238a5589ca288632c94d9684034"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/akua-dev/akuapkg/releases/download/v0.10.0/akuapkg-v0.10.0-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "123b173525218abfbd29da16f92aca7d0df3ee5220d81acd9a064acba76d0922"
+      url "https://github.com/akua-dev/akuapkg/releases/download/v0.10.1/akuapkg-v0.10.1-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "c8eadead15a763d0f6ce4131f6389d7f03bf89bbdf403c6d1c8e57155b202bc5"
     end
     on_intel do
-      url "https://github.com/akua-dev/akuapkg/releases/download/v0.10.0/akuapkg-v0.10.0-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "a1929cd6f1579324f2633a8f342b6ef939d0c5fdb9d524840d3a4c0243010a16"
+      url "https://github.com/akua-dev/akuapkg/releases/download/v0.10.1/akuapkg-v0.10.1-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "2685310583b3688527033af088c4e0f7b0dfef5fbfb3ae0e81a43d2dbafb54c9"
     end
   end
 
