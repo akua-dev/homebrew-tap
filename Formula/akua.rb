@@ -1,30 +1,30 @@
 # frozen_string_literal: true
 
-# Generated from the verified akua-dev/cli v0.12.0 release manifest.
+# Generated from the verified akua-dev/cli v0.12.1 release manifest.
 class Akua < Formula
   desc "CLI for building, deploying, and operating applications with Akua"
   homepage "https://docs.akua.dev"
-  version "0.12.0"
+  version "0.12.1"
 
   on_macos do
     on_arm do
-      url "https://github.com/akua-dev/cli/releases/download/v0.12.0/akua-v0.12.0-darwin-arm64.tar.gz"
-      sha256 "c64ff8c9fe0d2d03f89eb8301376c44dffe13b70a1e74c92fb7ac9000befcac8"
+      url "https://github.com/akua-dev/cli/releases/download/v0.12.1/akua-v0.12.1-darwin-arm64.tar.gz"
+      sha256 "fda5a6f714c742c2e679cea60e4c9965353605935e2b64e537ca272ed5c76800"
     end
     on_intel do
-      url "https://github.com/akua-dev/cli/releases/download/v0.12.0/akua-v0.12.0-darwin-x64.tar.gz"
-      sha256 "67a81a1f928d95f6790d0bcb9dfccddc4e409cccd612c859533c43785833aa6d"
+      url "https://github.com/akua-dev/cli/releases/download/v0.12.1/akua-v0.12.1-darwin-x64.tar.gz"
+      sha256 "9a8d9729fe9d14134673b3f6b2a5d5fd5c3ef43bb72d1a3a734b812454680996"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/akua-dev/cli/releases/download/v0.12.0/akua-v0.12.0-linux-arm64.tar.gz"
-      sha256 "70662709a0776f5acb1e9082c097e244a0124ec8401de094a5e1cc795bc88a57"
+      url "https://github.com/akua-dev/cli/releases/download/v0.12.1/akua-v0.12.1-linux-arm64.tar.gz"
+      sha256 "4020a8347485d3942d522189f46c519f23f7a45505ddc256240286313b062390"
     end
     on_intel do
-      url "https://github.com/akua-dev/cli/releases/download/v0.12.0/akua-v0.12.0-linux-x64.tar.gz"
-      sha256 "f7582a46f4eb10098348c7e7e5c7b0b96bbb2148c787c02094b704c459e37890"
+      url "https://github.com/akua-dev/cli/releases/download/v0.12.1/akua-v0.12.1-linux-x64.tar.gz"
+      sha256 "73fdece3dc0a33879cce1bbf226ad13523f9afb4faa42b43b3a1a277cd2501e7"
     end
   end
 
