@@ -11,9 +11,8 @@ class UpdateFormulaTest < Minitest::Test
   SCRIPT = File.join(ROOT, "scripts", "update_formula.rb").freeze
   FIXTURE = File.join(ROOT, "test", "fixtures", "cli-homebrew-v1.2.3.json").freeze
   VERSION = "1.2.3"
-  TAG = "v#{VERSION}".freeze
-  RELEASE_URL = "https://github.com/akua-dev/cli/releases/tag/#{TAG}".freeze
-  MANIFEST_URL = "https://github.com/akua-dev/cli/releases/download/#{TAG}/akua-v#{VERSION}-homebrew.json".freeze
+  TAG_PREFIXES = { "akua" => "cli-v", "akuapkg" => "v" }.freeze
+  TAG = "cli-v#{VERSION}".freeze
 
   def test_renders_a_libexec_formula_for_the_verified_release_manifest
     Dir.mktmpdir("tap-formula-") do |directory|
@@ -25,8 +24,9 @@ class UpdateFormulaTest < Minitest::Test
       assert syntax_status.success?, "invalid formula: #{syntax_out}#{syntax_err}"
       formula = File.read(output)
       assert_includes formula, "class Akua < Formula"
+      assert_includes formula, "Generated from the verified akua-dev/akua cli-v1.2.3 release manifest"
       assert_includes formula, %Q(version "#{VERSION}")
-      assert_includes formula, 'url "https://github.com/akua-dev/cli/releases/download/v1.2.3/akua-v1.2.3-darwin-arm64.tar.gz"'
+      assert_includes formula, 'url "https://github.com/akua-dev/akua/releases/download/cli-v1.2.3/akua-v1.2.3-darwin-arm64.tar.gz"'
       assert_includes formula, 'sha256 "1111111111111111111111111111111111111111111111111111111111111111"'
       assert_includes formula, 'libexec.install Dir["*"]'
       assert_includes formula, 'bin.install_symlink libexec/"akua"'
@@ -55,11 +55,11 @@ class UpdateFormulaTest < Minitest::Test
     Dir.mktmpdir("tap-formula-") do |directory|
       _stdout, stderr, status = run_generator(
         output: File.join(directory, "akua.rb"),
-        tag:    "v9.9.9",
+        tag:    "cli-v9.9.9",
       )
 
       refute status.success?
-      assert_includes stderr, "tag must equal v#{VERSION}"
+      assert_includes stderr, "tag must equal cli-v#{VERSION}"
     end
   end
 
@@ -68,9 +68,9 @@ class UpdateFormulaTest < Minitest::Test
       output = File.join(directory, "akuapkg.rb")
       stdout, stderr, status = Open3.capture3(
         "ruby", SCRIPT,
-        "--formula", "akuapkg", "--version", VERSION, "--tag", TAG,
-        "--release-url", "https://github.com/akua-dev/akuapkg/releases/tag/#{TAG}",
-        "--manifest-url", "https://github.com/akua-dev/akuapkg/releases/download/#{TAG}/akuapkg-v#{VERSION}-homebrew.json",
+        "--formula", "akuapkg", "--version", VERSION, "--tag", "v#{VERSION}",
+        "--release-url", "https://github.com/akua-dev/akua/releases/tag/v#{VERSION}",
+        "--manifest-url", "https://github.com/akua-dev/akua/releases/download/v#{VERSION}/akuapkg-v#{VERSION}-homebrew.json",
         "--manifest", File.join(ROOT, "test/fixtures/package-homebrew-v1.2.3.json"),
         "--output", output, chdir: ROOT
       )
@@ -80,7 +80,9 @@ class UpdateFormulaTest < Minitest::Test
       formula = File.read(output)
       assert_includes formula, "class Akuapkg < Formula"
       assert_includes formula, 'bin.install "akuapkg"'
-      assert_includes formula, "akuapkg-v1.2.3-aarch64-apple-darwin.tar.gz"
+      assert_includes formula, 'homepage "https://github.com/akua-dev/akua"'
+      assert_includes formula, "Generated from the verified akua-dev/akua v1.2.3 release manifest"
+      assert_includes formula, 'url "https://github.com/akua-dev/akua/releases/download/v1.2.3/akuapkg-v1.2.3-aarch64-apple-darwin.tar.gz"'
       assert_includes formula, '"init", "smoke"'
       assert_includes formula, '/akuapkg", "render"'
       refute_includes formula, "node_modules"
@@ -98,10 +100,33 @@ class UpdateFormulaTest < Minitest::Test
     end
   end
 
+  def test_rejects_the_package_tag_prefix_for_the_cli_formula
+    Dir.mktmpdir("tap-cli-tag-") do |directory|
+      _stdout, stderr, status = run_generator(output: File.join(directory, "akua.rb"), tag: "v#{VERSION}")
+
+      refute status.success?
+      assert_includes stderr, "tag must equal cli-v#{VERSION}"
+    end
+  end
+
+  def test_rejects_the_cli_tag_prefix_for_the_package_formula
+    Dir.mktmpdir("tap-package-tag-") do |directory|
+      _stdout, stderr, status = run_generator(
+        output: File.join(directory, "akuapkg.rb"),
+        manifest: File.join(ROOT, "test/fixtures/package-homebrew-v1.2.3.json"),
+        formula: "akuapkg",
+        tag: "cli-v#{VERSION}",
+      )
+
+      refute status.success?
+      assert_includes stderr, "tag must equal v#{VERSION}"
+    end
+  end
+
   def test_rejects_a_package_archive_from_another_repository
     Dir.mktmpdir("tap-package-repository-") do |directory|
       manifest = JSON.parse(File.read(File.join(ROOT, "test/fixtures/package-homebrew-v1.2.3.json")))
-      manifest.fetch("platforms").fetch("macos_arm")["url"].sub!("/akuapkg/", "/cli/")
+      manifest.fetch("platforms").fetch("macos_arm")["url"].sub!("/akua-dev/akua/", "/akua-dev/cli/")
       input = File.join(directory, "manifest.json")
       output = File.join(directory, "akuapkg.rb")
       File.write(input, JSON.generate(manifest))
@@ -114,16 +139,17 @@ class UpdateFormulaTest < Minitest::Test
 
   private
 
-  def run_generator(output:, manifest: FIXTURE, tag: TAG, formula: "akua")
-    repository = formula == "akuapkg" ? "akuapkg" : "cli"
+  def run_generator(output:, manifest: FIXTURE, tag: nil, formula: "akua")
+    release_tag = "#{TAG_PREFIXES.fetch(formula)}#{VERSION}"
+    tag ||= release_tag
     Open3.capture3(
       "ruby",
       SCRIPT,
       "--formula", formula,
       "--version", VERSION,
       "--tag", tag,
-      "--release-url", "https://github.com/akua-dev/#{repository}/releases/tag/#{TAG}",
-      "--manifest-url", "https://github.com/akua-dev/#{repository}/releases/download/#{TAG}/#{formula}-v#{VERSION}-homebrew.json",
+      "--release-url", "https://github.com/akua-dev/akua/releases/tag/#{release_tag}",
+      "--manifest-url", "https://github.com/akua-dev/akua/releases/download/#{release_tag}/#{formula}-v#{VERSION}-homebrew.json",
       "--manifest", manifest,
       "--output", output,
       chdir: ROOT
