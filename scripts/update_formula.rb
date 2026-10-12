@@ -20,8 +20,8 @@ module ReleaseFormula
     "linux_intel" => ["x86_64-unknown-linux-gnu", "on_linux", "on_intel"],
   }.freeze
   CONTRACTS = {
-    "akua" => { repository: "akua", tag_prefix: "cli-v", class_name: "Akua", platforms: CLI_PLATFORMS },
-    "akuapkg" => { repository: "akua", tag_prefix: "v", class_name: "Akuapkg", platforms: PACKAGE_PLATFORMS },
+    "akua" => { repository: "akua", class_name: "Akua", platforms: CLI_PLATFORMS },
+    "akuapkg" => { repository: "akua", class_name: "Akuapkg", platforms: PACKAGE_PLATFORMS },
   }.freeze
   MANIFEST_KEYS = %w[formula platforms release schema_version version].freeze
   PLATFORM_KEYS = %w[artifact sha256 url].freeze
@@ -44,9 +44,8 @@ module ReleaseFormula
     contract = CONTRACTS.fetch(formula) { raise ArgumentError, "formula must equal akua or akuapkg" }
     repository = contract.fetch(:repository)
     targets = contract.fetch(:platforms)
-    tag_prefix = contract.fetch(:tag_prefix)
     version = options.fetch(:version)
-    tag = "#{tag_prefix}#{version}"
+    tag = "v#{version}"
     raise ArgumentError, "version is not valid SemVer" unless VERSION_PATTERN.match?(version)
     raise ArgumentError, "tag must equal #{tag}" if options.fetch(:tag) != tag
 
@@ -99,7 +98,7 @@ module ReleaseFormula
     formula = manifest.fetch("formula")
     contract = CONTRACTS.fetch(formula)
     repository = contract.fetch(:repository)
-    tag = "#{contract.fetch(:tag_prefix)}#{version}"
+    tag = "v#{version}"
     platforms = manifest.fetch("platforms")
     package_tool = formula == "akuapkg"
     homepage = package_tool ? "https://github.com/akua-dev/akua" : "https://docs.akua.dev"

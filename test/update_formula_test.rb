@@ -11,8 +11,7 @@ class UpdateFormulaTest < Minitest::Test
   SCRIPT = File.join(ROOT, "scripts", "update_formula.rb").freeze
   FIXTURE = File.join(ROOT, "test", "fixtures", "cli-homebrew-v1.2.3.json").freeze
   VERSION = "1.2.3"
-  TAG_PREFIXES = { "akua" => "cli-v", "akuapkg" => "v" }.freeze
-  TAG = "cli-v#{VERSION}".freeze
+  TAG = "v#{VERSION}".freeze
 
   def test_renders_a_libexec_formula_for_the_verified_release_manifest
     Dir.mktmpdir("tap-formula-") do |directory|
@@ -24,9 +23,9 @@ class UpdateFormulaTest < Minitest::Test
       assert syntax_status.success?, "invalid formula: #{syntax_out}#{syntax_err}"
       formula = File.read(output)
       assert_includes formula, "class Akua < Formula"
-      assert_includes formula, "Generated from the verified akua-dev/akua cli-v1.2.3 release manifest"
+      assert_includes formula, "Generated from the verified akua-dev/akua v1.2.3 release manifest"
       assert_includes formula, %Q(version "#{VERSION}")
-      assert_includes formula, 'url "https://github.com/akua-dev/akua/releases/download/cli-v1.2.3/akua-v1.2.3-darwin-arm64.tar.gz"'
+      assert_includes formula, 'url "https://github.com/akua-dev/akua/releases/download/v1.2.3/akua-v1.2.3-darwin-arm64.tar.gz"'
       assert_includes formula, 'sha256 "1111111111111111111111111111111111111111111111111111111111111111"'
       assert_includes formula, 'libexec.install Dir["*"]'
       assert_includes formula, 'bin.install_symlink libexec/"akua"'
@@ -55,11 +54,11 @@ class UpdateFormulaTest < Minitest::Test
     Dir.mktmpdir("tap-formula-") do |directory|
       _stdout, stderr, status = run_generator(
         output: File.join(directory, "akua.rb"),
-        tag:    "cli-v9.9.9",
+        tag:    "v9.9.9",
       )
 
       refute status.success?
-      assert_includes stderr, "tag must equal cli-v#{VERSION}"
+      assert_includes stderr, "tag must equal v#{VERSION}"
     end
   end
 
@@ -100,23 +99,9 @@ class UpdateFormulaTest < Minitest::Test
     end
   end
 
-  def test_rejects_the_package_tag_prefix_for_the_cli_formula
+  def test_rejects_the_cli_tag_prefix_for_the_cli_formula
     Dir.mktmpdir("tap-cli-tag-") do |directory|
-      _stdout, stderr, status = run_generator(output: File.join(directory, "akua.rb"), tag: "v#{VERSION}")
-
-      refute status.success?
-      assert_includes stderr, "tag must equal cli-v#{VERSION}"
-    end
-  end
-
-  def test_rejects_the_cli_tag_prefix_for_the_package_formula
-    Dir.mktmpdir("tap-package-tag-") do |directory|
-      _stdout, stderr, status = run_generator(
-        output: File.join(directory, "akuapkg.rb"),
-        manifest: File.join(ROOT, "test/fixtures/package-homebrew-v1.2.3.json"),
-        formula: "akuapkg",
-        tag: "cli-v#{VERSION}",
-      )
+      _stdout, stderr, status = run_generator(output: File.join(directory, "akua.rb"), tag: "cli-v#{VERSION}")
 
       refute status.success?
       assert_includes stderr, "tag must equal v#{VERSION}"
@@ -140,16 +125,15 @@ class UpdateFormulaTest < Minitest::Test
   private
 
   def run_generator(output:, manifest: FIXTURE, tag: nil, formula: "akua")
-    release_tag = "#{TAG_PREFIXES.fetch(formula)}#{VERSION}"
-    tag ||= release_tag
+    tag ||= TAG
     Open3.capture3(
       "ruby",
       SCRIPT,
       "--formula", formula,
       "--version", VERSION,
       "--tag", tag,
-      "--release-url", "https://github.com/akua-dev/akua/releases/tag/#{release_tag}",
-      "--manifest-url", "https://github.com/akua-dev/akua/releases/download/#{release_tag}/#{formula}-v#{VERSION}-homebrew.json",
+      "--release-url", "https://github.com/akua-dev/akua/releases/tag/#{TAG}",
+      "--manifest-url", "https://github.com/akua-dev/akua/releases/download/#{TAG}/#{formula}-v#{VERSION}-homebrew.json",
       "--manifest", manifest,
       "--output", output,
       chdir: ROOT
