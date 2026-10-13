@@ -1,30 +1,30 @@
 # frozen_string_literal: true
 
-# Generated from the verified akua-dev/akuapkg v0.10.1 release manifest.
+# Generated from the verified akua-dev/akua v0.13.0 release manifest.
 class Akuapkg < Formula
   desc "Cloud-native package build, transform, and preview toolkit"
-  homepage "https://github.com/akua-dev/akuapkg"
-  version "0.10.1"
+  homepage "https://github.com/akua-dev/akua"
+  version "0.13.0"
 
   on_macos do
     on_arm do
-      url "https://github.com/akua-dev/akuapkg/releases/download/v0.10.1/akuapkg-v0.10.1-aarch64-apple-darwin.tar.gz"
-      sha256 "351eb9638fa0dacc14375a89a4831fa20f78c8f1b1994f5bd11c3d08f487d567"
+      url "https://github.com/akua-dev/akua/releases/download/v0.13.0/akuapkg-v0.13.0-aarch64-apple-darwin.tar.gz"
+      sha256 "56dbac06c63220b29b579b7a1150fce984fab436d0f61bfb02bcde7f46ab43b0"
     end
     on_intel do
-      url "https://github.com/akua-dev/akuapkg/releases/download/v0.10.1/akuapkg-v0.10.1-x86_64-apple-darwin.tar.gz"
-      sha256 "b8f61ab15e14e9a6446254c0dc9fed144e0ea238a5589ca288632c94d9684034"
+      url "https://github.com/akua-dev/akua/releases/download/v0.13.0/akuapkg-v0.13.0-x86_64-apple-darwin.tar.gz"
+      sha256 "e4ce0bdb6879a506f34117793f5bf551991cd2886e23d6370962a0e4e7ecf5a0"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/akua-dev/akuapkg/releases/download/v0.10.1/akuapkg-v0.10.1-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "c8eadead15a763d0f6ce4131f6389d7f03bf89bbdf403c6d1c8e57155b202bc5"
+      url "https://github.com/akua-dev/akua/releases/download/v0.13.0/akuapkg-v0.13.0-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "b83e6375034113a7b165a5d2b7f6661fa7b1a9d2e42e7675472db31486575147"
     end
     on_intel do
-      url "https://github.com/akua-dev/akuapkg/releases/download/v0.10.1/akuapkg-v0.10.1-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "2685310583b3688527033af088c4e0f7b0dfef5fbfb3ae0e81a43d2dbafb54c9"
+      url "https://github.com/akua-dev/akua/releases/download/v0.13.0/akuapkg-v0.13.0-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "b0e8d61ed8d937da1e5b63fbaff324d0da4b5f870ccbb5ca900e87eb3c911c68"
     end
   end
 
