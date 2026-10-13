@@ -4,15 +4,16 @@
 require "minitest/autorun"
 require "yaml"
 require "shellwords"
+require_relative "formula_contract_assertions"
 
 class RepositoryContractTest < Minitest::Test
+  include FormulaContractAssertions
   ROOT = File.expand_path("..", __dir__).freeze
 
   def test_platform_cli_owns_the_akua_formula_and_preserves_its_runtime_tree
     formula = File.read(File.join(ROOT, "Formula", "akua.rb"))
 
-    assert_includes formula, 'homepage "https://docs.akua.dev"'
-    assert_includes formula, "https://github.com/akua-dev/cli/releases/download/"
+    assert_formula_release_coordinates formula, "akua"
     assert_includes formula, 'libexec.install Dir["*"]'
     assert_includes formula, 'bin.install_symlink libexec/"akua"'
     assert_includes formula, %Q(shell_output("\#{bin}/akua --version"))
@@ -24,7 +25,7 @@ class RepositoryContractTest < Minitest::Test
     formula = File.read(File.join(ROOT, "Formula", "akuapkg.rb"))
 
     assert_includes formula, "class Akuapkg < Formula"
-    assert_includes formula, 'homepage "https://github.com/akua-dev/akuapkg"'
+    assert_formula_release_coordinates formula, "akuapkg"
     assert_match(/bin\.install .*\bakuapkg\b/, formula)
     assert_includes formula, %Q(shell_output("\#{bin}/akuapkg --version"))
   end

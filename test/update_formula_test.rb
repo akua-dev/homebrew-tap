@@ -5,13 +5,31 @@ require "json"
 require "minitest/autorun"
 require "open3"
 require "tmpdir"
+require_relative "formula_contract_assertions"
 
 class UpdateFormulaTest < Minitest::Test
+  include FormulaContractAssertions
   ROOT = File.expand_path("..", __dir__).freeze
   SCRIPT = File.join(ROOT, "scripts", "update_formula.rb").freeze
   FIXTURE = File.join(ROOT, "test", "fixtures", "cli-homebrew-v1.2.3.json").freeze
   VERSION = "1.2.3"
-  TAG = "v#{VERSION}".freeze
+
+  %w[akua akuapkg].each do |name|
+    define_method("test_renders_#{name}_at_the_shared_repository_transition") do
+      Dir.mktmpdir("tap-release-transition-") do |directory|
+        fixture = name == "akua" ? "cli" : "package"
+        manifest = File.read(File.join(ROOT, "test", "fixtures", "#{fixture}-homebrew-v1.2.3.json"))
+        input = File.join(directory, "manifest.json")
+        output = File.join(directory, "#{name}.rb")
+        File.write(input, manifest.gsub("1.2.3", "0.13.0"))
+
+        stdout, stderr, status = run_generator(output: output, manifest: input, formula: name, version: "0.13.0")
+
+        assert status.success?, "generator failed: #{stdout}#{stderr}"
+        assert_formula_release_coordinates File.read(output), name
+      end
+    end
+  end
 
   def test_renders_a_libexec_formula_for_the_verified_release_manifest
     Dir.mktmpdir("tap-formula-") do |directory|
@@ -65,13 +83,10 @@ class UpdateFormulaTest < Minitest::Test
   def test_renders_the_standalone_package_formula_from_its_verified_release
     Dir.mktmpdir("tap-package-formula-") do |directory|
       output = File.join(directory, "akuapkg.rb")
-      stdout, stderr, status = Open3.capture3(
-        "ruby", SCRIPT,
-        "--formula", "akuapkg", "--version", VERSION, "--tag", "v#{VERSION}",
-        "--release-url", "https://github.com/akua-dev/akua/releases/tag/v#{VERSION}",
-        "--manifest-url", "https://github.com/akua-dev/akua/releases/download/v#{VERSION}/akuapkg-v#{VERSION}-homebrew.json",
-        "--manifest", File.join(ROOT, "test/fixtures/package-homebrew-v1.2.3.json"),
-        "--output", output, chdir: ROOT
+      stdout, stderr, status = run_generator(
+        output: output,
+        formula: "akuapkg",
+        manifest: File.join(ROOT, "test/fixtures/package-homebrew-v1.2.3.json")
       )
       assert status.success?, "generator failed: #{stdout}#{stderr}"
       syntax_out, syntax_err, syntax_status = Open3.capture3("ruby", "-c", output)
@@ -79,7 +94,7 @@ class UpdateFormulaTest < Minitest::Test
       formula = File.read(output)
       assert_includes formula, "class Akuapkg < Formula"
       assert_includes formula, 'bin.install "akuapkg"'
-      assert_includes formula, 'homepage "https://github.com/akua-dev/akua"'
+      assert_formula_release_coordinates formula, "akuapkg"
       assert_includes formula, "Generated from the verified akua-dev/akua v1.2.3 release manifest"
       assert_includes formula, 'url "https://github.com/akua-dev/akua/releases/download/v1.2.3/akuapkg-v1.2.3-aarch64-apple-darwin.tar.gz"'
       assert_includes formula, '"init", "smoke"'
@@ -124,16 +139,17 @@ class UpdateFormulaTest < Minitest::Test
 
   private
 
-  def run_generator(output:, manifest: FIXTURE, tag: nil, formula: "akua")
-    tag ||= TAG
+  def run_generator(output:, manifest: FIXTURE, tag: nil, formula: "akua", version: VERSION)
+    release_tag = "v#{version}"
+    tag ||= release_tag
     Open3.capture3(
       "ruby",
       SCRIPT,
       "--formula", formula,
-      "--version", VERSION,
+      "--version", version,
       "--tag", tag,
-      "--release-url", "https://github.com/akua-dev/akua/releases/tag/#{TAG}",
-      "--manifest-url", "https://github.com/akua-dev/akua/releases/download/#{TAG}/#{formula}-v#{VERSION}-homebrew.json",
+      "--release-url", "https://github.com/akua-dev/akua/releases/tag/#{release_tag}",
+      "--manifest-url", "https://github.com/akua-dev/akua/releases/download/#{release_tag}/#{formula}-v#{version}-homebrew.json",
       "--manifest", manifest,
       "--output", output,
       chdir: ROOT
