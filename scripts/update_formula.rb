@@ -20,8 +20,8 @@ module ReleaseFormula
     "linux_intel" => ["x86_64-unknown-linux-gnu", "on_linux", "on_intel"],
   }.freeze
   CONTRACTS = {
-    "akua" => { repository: "cli", class_name: "Akua", platforms: CLI_PLATFORMS },
-    "akuapkg" => { repository: "akuapkg", class_name: "Akuapkg", platforms: PACKAGE_PLATFORMS },
+    "akua" => { repository: "akua", class_name: "Akua", platforms: CLI_PLATFORMS },
+    "akuapkg" => { repository: "akua", class_name: "Akuapkg", platforms: PACKAGE_PLATFORMS },
   }.freeze
   MANIFEST_KEYS = %w[formula platforms release schema_version version].freeze
   PLATFORM_KEYS = %w[artifact sha256 url].freeze
@@ -45,11 +45,12 @@ module ReleaseFormula
     repository = contract.fetch(:repository)
     targets = contract.fetch(:platforms)
     version = options.fetch(:version)
+    tag = "v#{version}"
     raise ArgumentError, "version is not valid SemVer" unless VERSION_PATTERN.match?(version)
-    raise ArgumentError, "tag must equal v#{version}" if options.fetch(:tag) != "v#{version}"
+    raise ArgumentError, "tag must equal #{tag}" if options.fetch(:tag) != tag
 
-    release_url = "https://github.com/akua-dev/#{repository}/releases/tag/v#{version}"
-    manifest_url = "https://github.com/akua-dev/#{repository}/releases/download/v#{version}/#{formula}-v#{version}-homebrew.json"
+    release_url = "https://github.com/akua-dev/#{repository}/releases/tag/#{tag}"
+    manifest_url = "https://github.com/akua-dev/#{repository}/releases/download/#{tag}/#{formula}-v#{version}-homebrew.json"
     if options.fetch(:release_url) != release_url
       raise ArgumentError,
             "release URL does not match the verified release"
@@ -77,7 +78,7 @@ module ReleaseFormula
       require_hash(release, name.to_s)
       require_keys(release, PLATFORM_KEYS, name)
       artifact = "#{formula}-v#{version}-#{target}.tar.gz"
-      url = "https://github.com/akua-dev/#{repository}/releases/download/v#{version}/#{artifact}"
+      url = "https://github.com/akua-dev/#{repository}/releases/download/#{tag}/#{artifact}"
       if release.fetch("artifact") != artifact
         raise ArgumentError,
               "#{name}.artifact does not match the release target"
@@ -97,9 +98,10 @@ module ReleaseFormula
     formula = manifest.fetch("formula")
     contract = CONTRACTS.fetch(formula)
     repository = contract.fetch(:repository)
+    tag = "v#{version}"
     platforms = manifest.fetch("platforms")
     package_tool = formula == "akuapkg"
-    homepage = package_tool ? "https://github.com/akua-dev/akuapkg" : "https://docs.akua.dev"
+    homepage = package_tool ? "https://github.com/akua-dev/akua" : "https://docs.akua.dev"
     description = package_tool ? "Cloud-native package build, transform, and preview toolkit" : "CLI for building, deploying, and operating applications with Akua"
     installation = if package_tool
       <<~RUBY
@@ -137,7 +139,7 @@ module ReleaseFormula
     <<~RUBY
       # frozen_string_literal: true
 
-      # Generated from the verified akua-dev/#{repository} v#{version} release manifest.
+      # Generated from the verified akua-dev/#{repository} #{tag} release manifest.
       class #{contract.fetch(:class_name)} < Formula
         desc "#{description}"
         homepage "#{homepage}"
