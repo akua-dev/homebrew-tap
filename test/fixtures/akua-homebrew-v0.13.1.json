@@ -1,0 +1,28 @@
+{
+	"schema_version": 1,
+	"formula": "akua",
+	"version": "0.13.1",
+	"release": "https://github.com/akua-dev/akua/releases/tag/v0.13.1",
+	"platforms": {
+		"macos_arm": {
+			"artifact": "akua-v0.13.1-darwin-arm64.tar.gz",
+			"url": "https://github.com/akua-dev/akua/releases/download/v0.13.1/akua-v0.13.1-darwin-arm64.tar.gz",
+			"sha256": "4048485e00c9127fa0471d1809c51faf0e38ac6de717551ca6bbc0c8d1320e2e"
+		},
+		"macos_intel": {
+			"artifact": "akua-v0.13.1-darwin-x64.tar.gz",
+			"url": "https://github.com/akua-dev/akua/releases/download/v0.13.1/akua-v0.13.1-darwin-x64.tar.gz",
+			"sha256": "d0cd74ab6214e4dfaf729191572746cb25a5d179715b6c2d5f5d77367cdf0721"
+		},
+		"linux_arm": {
+			"artifact": "akua-v0.13.1-linux-arm64.tar.gz",
+			"url": "https://github.com/akua-dev/akua/releases/download/v0.13.1/akua-v0.13.1-linux-arm64.tar.gz",
+			"sha256": "f0cb7c08690c68986daf97fe55a0cb35f55521c1aced8b1429d920add0c92a31"
+		},
+		"linux_intel": {
+			"artifact": "akua-v0.13.1-linux-x64.tar.gz",
+			"url": "https://github.com/akua-dev/akua/releases/download/v0.13.1/akua-v0.13.1-linux-x64.tar.gz",
+			"sha256": "f4839872f0df9776ac02d53760db6bc4e0b922bb06a90d698b8eb0b9fd276da7"
+		}
+	}
+}

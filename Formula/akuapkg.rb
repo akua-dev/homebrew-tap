@@ -4,7 +4,6 @@
 class Akuapkg < Formula
   desc "Cloud-native package build, transform, and preview toolkit"
   homepage "https://github.com/akua-dev/akua"
-  version "0.13.1"
 
   on_macos do
     on_arm do
@@ -31,12 +30,12 @@ class Akuapkg < Formula
   def install
     bin.install "akuapkg"
   end
-  
+
   test do
     assert_match version.to_s, shell_output("#{bin}/akuapkg --version")
-    system "#{bin}/akuapkg", "init", "smoke"
+    system bin/"akuapkg", "init", "smoke"
     cd "smoke" do
-      system "#{bin}/akuapkg", "render"
+      system bin/"akuapkg", "render"
       assert_predicate Pathname("deploy"), :directory?
       refute_empty Dir["deploy/**/*"]
     end

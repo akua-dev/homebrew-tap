@@ -32,13 +32,9 @@ class Akua < Formula
     libexec.install Dir["*"]
     bin.install_symlink libexec/"akua"
   end
-  
+
   test do
     assert_match version.to_s, shell_output("#{bin}/akua --version")
-    if (libexec/"node_modules/@akua-dev/native").exist?
-      assert_match '"version"', shell_output("#{bin}/akua pkg version --json")
-    else
-      assert_match "Usage: akua", shell_output("#{bin}/akua pkg --help")
-    end
+    assert_match '"version"', shell_output("#{bin}/akua pkg version --json")
   end
 end
