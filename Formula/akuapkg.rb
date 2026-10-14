@@ -1,30 +1,30 @@
 # frozen_string_literal: true
 
-# Generated from the verified akua-dev/akua v0.13.0 release manifest.
+# Generated from the verified akua-dev/akua v0.13.1 release manifest.
 class Akuapkg < Formula
   desc "Cloud-native package build, transform, and preview toolkit"
   homepage "https://github.com/akua-dev/akua"
-  version "0.13.0"
+  version "0.13.1"
 
   on_macos do
     on_arm do
-      url "https://github.com/akua-dev/akua/releases/download/v0.13.0/akuapkg-v0.13.0-aarch64-apple-darwin.tar.gz"
-      sha256 "56dbac06c63220b29b579b7a1150fce984fab436d0f61bfb02bcde7f46ab43b0"
+      url "https://github.com/akua-dev/akua/releases/download/v0.13.1/akuapkg-v0.13.1-aarch64-apple-darwin.tar.gz"
+      sha256 "26a30d918f26c2423f23dd92ed78e152a83449abee89a1fbfbe5f28bd04ce182"
     end
     on_intel do
-      url "https://github.com/akua-dev/akua/releases/download/v0.13.0/akuapkg-v0.13.0-x86_64-apple-darwin.tar.gz"
-      sha256 "e4ce0bdb6879a506f34117793f5bf551991cd2886e23d6370962a0e4e7ecf5a0"
+      url "https://github.com/akua-dev/akua/releases/download/v0.13.1/akuapkg-v0.13.1-x86_64-apple-darwin.tar.gz"
+      sha256 "999ae9ade55c8dd782d1a737e4b6978f00f80547682c19099df83b2f80f0ff88"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/akua-dev/akua/releases/download/v0.13.0/akuapkg-v0.13.0-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "b83e6375034113a7b165a5d2b7f6661fa7b1a9d2e42e7675472db31486575147"
+      url "https://github.com/akua-dev/akua/releases/download/v0.13.1/akuapkg-v0.13.1-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "7a914ed56c42670cb4ba4913e87163732afde81fd0877cf6c690a3b00901b622"
     end
     on_intel do
-      url "https://github.com/akua-dev/akua/releases/download/v0.13.0/akuapkg-v0.13.0-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "b0e8d61ed8d937da1e5b63fbaff324d0da4b5f870ccbb5ca900e87eb3c911c68"
+      url "https://github.com/akua-dev/akua/releases/download/v0.13.1/akuapkg-v0.13.1-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "7ae1be93e70d9014d241d7906cc1927d9e28c81f864e28bca274cf95fe2df117"
     end
   end
 
