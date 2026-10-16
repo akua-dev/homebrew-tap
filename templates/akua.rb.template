@@ -1,0 +1,40 @@
+# frozen_string_literal: true
+
+# Generated from the verified akua-dev/akua v{{version}} release manifest.
+class Akua < Formula
+  desc "CLI for building, deploying, and operating applications with Akua"
+  homepage "https://docs.akua.dev"
+  version "{{version}}"
+
+  on_macos do
+    on_arm do
+      url "{{macos_arm_url}}"
+      sha256 "{{macos_arm_sha256}}"
+    end
+    on_intel do
+      url "{{macos_intel_url}}"
+      sha256 "{{macos_intel_sha256}}"
+    end
+  end
+
+  on_linux do
+    on_arm do
+      url "{{linux_arm_url}}"
+      sha256 "{{linux_arm_sha256}}"
+    end
+    on_intel do
+      url "{{linux_intel_url}}"
+      sha256 "{{linux_intel_sha256}}"
+    end
+  end
+
+  def install
+    libexec.install Dir["*"]
+    bin.install_symlink libexec/"akua"
+  end
+
+  test do
+    assert_match version.to_s, shell_output("#{bin}/akua --version")
+    assert_match '"version"', shell_output("#{bin}/akua pkg version --json")
+  end
+end

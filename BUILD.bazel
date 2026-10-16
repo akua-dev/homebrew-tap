@@ -1,0 +1,39 @@
+load("@bazel_lib//lib:copy_to_bin.bzl", "copy_to_bin")
+
+package(default_visibility = ["//visibility:public"])
+
+copy_to_bin(
+    name = "fixture_typecheck_inputs",
+    srcs = [
+        "test/fixtures/cli-homebrew-v1.2.3.json",
+        "test/fixtures/package-homebrew-v1.2.3.json",
+    ],
+)
+
+filegroup(
+    name = "formula_files",
+    srcs = glob(["Formula/*.rb"]),
+)
+
+filegroup(
+    name = "source",
+    srcs = glob([
+        "Formula/*.rb",
+        "templates/*",
+        "test/fixtures/*.json",
+    ]) + ["README.md"],
+)
+
+exports_files(glob([
+    "templates/*",
+    "test/fixtures/*.json",
+]))
+
+filegroup(
+    name = "typescript_only_policy_srcs",
+    srcs = glob(
+        ["**/*.py"],
+        allow_empty = True,
+    ),
+    visibility = ["//visibility:public"],
+)
