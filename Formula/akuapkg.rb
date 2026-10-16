@@ -1,29 +1,29 @@
 # frozen_string_literal: true
 
-# Generated from the verified akua-dev/akua v0.13.1 release manifest.
+# Generated from the verified akua-dev/akua v0.13.2 release manifest.
 class Akuapkg < Formula
   desc "Cloud-native package build, transform, and preview toolkit"
   homepage "https://github.com/akua-dev/akua"
 
   on_macos do
     on_arm do
-      url "https://github.com/akua-dev/akua/releases/download/v0.13.1/akuapkg-v0.13.1-aarch64-apple-darwin.tar.gz"
-      sha256 "26a30d918f26c2423f23dd92ed78e152a83449abee89a1fbfbe5f28bd04ce182"
+      url "https://github.com/akua-dev/akua/releases/download/v0.13.2/akuapkg-v0.13.2-aarch64-apple-darwin.tar.gz"
+      sha256 "4bece6ab249ff0ccd794378c636b4fcdaad5cb6d146e97a3f7abe5ed13a6c80d"
     end
     on_intel do
-      url "https://github.com/akua-dev/akua/releases/download/v0.13.1/akuapkg-v0.13.1-x86_64-apple-darwin.tar.gz"
-      sha256 "999ae9ade55c8dd782d1a737e4b6978f00f80547682c19099df83b2f80f0ff88"
+      url "https://github.com/akua-dev/akua/releases/download/v0.13.2/akuapkg-v0.13.2-x86_64-apple-darwin.tar.gz"
+      sha256 "881b1afe790b4313920cd160e42a80c1942886ca4781e797272ef881710c040a"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/akua-dev/akua/releases/download/v0.13.1/akuapkg-v0.13.1-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "7a914ed56c42670cb4ba4913e87163732afde81fd0877cf6c690a3b00901b622"
+      url "https://github.com/akua-dev/akua/releases/download/v0.13.2/akuapkg-v0.13.2-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "2397a8ad18a877212e9dcf7245b68ec7776b4ebaa83f7a08e0e469a62a94b1a3"
     end
     on_intel do
-      url "https://github.com/akua-dev/akua/releases/download/v0.13.1/akuapkg-v0.13.1-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "7ae1be93e70d9014d241d7906cc1927d9e28c81f864e28bca274cf95fe2df117"
+      url "https://github.com/akua-dev/akua/releases/download/v0.13.2/akuapkg-v0.13.2-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "c19d4c38de4fb5f6f5aeb243ac5007ecf43d986249e67452a3e49fd77c513bbe"
     end
   end
 
