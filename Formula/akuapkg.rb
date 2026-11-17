@@ -1,29 +1,29 @@
 # frozen_string_literal: true
 
-# Generated from the verified akua-dev/akua v0.13.13 release manifest.
+# Generated from the verified akua-dev/akua v0.13.14 release manifest.
 class Akuapkg < Formula
   desc "Cloud-native package build, transform, and preview toolkit"
   homepage "https://github.com/akua-dev/akua"
 
   on_macos do
     on_arm do
-      url "https://github.com/akua-dev/akua/releases/download/v0.13.13/akuapkg-v0.13.13-aarch64-apple-darwin.tar.gz"
-      sha256 "a79fea08978c872e96642051c1e3c64bf2ae3cc0a35fd44cdcb248c62205936a"
+      url "https://github.com/akua-dev/akua/releases/download/v0.13.14/akuapkg-v0.13.14-aarch64-apple-darwin.tar.gz"
+      sha256 "e4b6a8cee4c37a662daf52992bba0b797d5e48b663ac54c831afedf316df844d"
     end
     on_intel do
-      url "https://github.com/akua-dev/akua/releases/download/v0.13.13/akuapkg-v0.13.13-x86_64-apple-darwin.tar.gz"
-      sha256 "9f97cae35ab36ab1a5213e28d2959092e955c0e6cc6266a697916a343c01db3e"
+      url "https://github.com/akua-dev/akua/releases/download/v0.13.14/akuapkg-v0.13.14-x86_64-apple-darwin.tar.gz"
+      sha256 "9e93d0ed957622e8942b4ffe42288a305e41dd6032cf167b6dd323a8786e6661"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/akua-dev/akua/releases/download/v0.13.13/akuapkg-v0.13.13-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "73a5c983cb53e2605f59b0a66628cc17464991684513f5f788d77ebcfb478aea"
+      url "https://github.com/akua-dev/akua/releases/download/v0.13.14/akuapkg-v0.13.14-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "4c5e7711c7ae79adf996ce970f11c6ec024f747ef58d31b714db1121b37ce697"
     end
     on_intel do
-      url "https://github.com/akua-dev/akua/releases/download/v0.13.13/akuapkg-v0.13.13-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "77a12968b6f67279ba7ba96e1483f77f40d5e69507f39df6921e4df926831620"
+      url "https://github.com/akua-dev/akua/releases/download/v0.13.14/akuapkg-v0.13.14-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "fba2b4b53d1357135bca85a556a12bc4be717a4fcb8920791bf3316fe08bb624"
     end
   end
 
